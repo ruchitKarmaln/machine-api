@@ -28,7 +28,7 @@ const register = async ({ name, mobileNumber, password }) => {
 };
 
 const login = async ({ mobileNumber, password }) => {
-  const user = await findOne({ mobileNumber });
+  const user = await User.findOne({ mobileNumber });
   if (!user) {
     throw new Error("Invalid mobile number or password");
   }
@@ -38,7 +38,7 @@ const login = async ({ mobileNumber, password }) => {
     throw new Error("Invalid mobile number or password");
   }
 
-  const token = sign({ userId: user._id }, jwtSecret, {
+  const token = jwt.sign({ userId: user._id }, jwtSecret, {
     expiresIn: "1d",
   });
 
